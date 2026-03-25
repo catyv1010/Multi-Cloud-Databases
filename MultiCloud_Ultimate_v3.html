@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Cloud Databases | Aula Invertida</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050a18;--bgc:rgba(12,18,40,0.92);
+  --cy:#00e5ff;--mg:#e040fb;--or:#ff6d00;
+  --gr:#00e676;--bl:#448aff;--yl:#ffd600;--rd:#ff5252;
+  --t1:#e8eaf6;--t2:#90a4ae;
+  --gl:rgba(255,255,255,0.03);--gb:rgba(255,255,255,0.06);
+}
+html,body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);overflow:hidden;height:100vh;width:100vw;-webkit-font-smoothing:antialiased}
+
+/* ===== ANIMATED UNIVERSE ===== */
+.uni{position:fixed;inset:0;z-index:0;overflow:hidden}
+.uni::before{content:'';position:absolute;width:300%;height:300%;top:-100%;left:-100%;
+  background:radial-gradient(ellipse at 20% 20%,rgba(0,229,255,0.08) 0%,transparent 40%),
+  radial-gradient(ellipse at 80% 80%,rgba(224,64,251,0.06) 0%,transparent 40%),
+  radial-gradient(ellipse at 50% 50%,rgba(68,138,255,0.05) 0%,transparent 50%),
+  radial-gradient(ellipse at 70% 30%,rgba(0,230,118,0.04) 0%,transparent 35%);
+  animation:nebDrift 50s ease-in-out infinite alternate}
+@keyframes nebDrift{0%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(-2%,-1%) rotate(1.5deg) scale(1.02)}100%{transform:translate(-3%,-2%) rotate(3deg) scale(1)}}
+
+/* Stars with multiple sizes */
+.star{position:absolute;background:#fff;border-radius:50%;animation:tw var(--d) ease-in-out infinite alternate}
+.star.big{box-shadow:0 0 6px 1px rgba(255,255,255,0.3)}
+@keyframes tw{0%{opacity:0.05;transform:scale(0.6)}100%{opacity:var(--o);transform:scale(1.4)}}
+
+/* Grid */
+.grd{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.02) 1px,transparent 1px);background-size:80px 80px;animation:grdP 12s ease-in-out infinite alternate}
+@keyframes grdP{0%{opacity:0.15}100%{opacity:0.45}}
+
+/* ===== FLOATING CLOUDS - MORE & BIGGER ===== */
+.fcloud{position:fixed;z-index:1;pointer-events:none;filter:blur(0.5px)}
+.fc1{width:260px;top:5%;animation:cfl 30s linear infinite;opacity:0.14}
+.fc2{width:200px;top:22%;animation:cfl 42s linear infinite;animation-delay:6s;opacity:0.09}
+.fc3{width:300px;top:55%;animation:cfl 48s linear infinite;animation-delay:14s;opacity:0.11}
+.fc4{width:180px;top:72%;animation:cfl 35s linear infinite;animation-delay:20s;opacity:0.08}
+.fc5{width:220px;top:38%;animation:cfl 40s linear infinite;animation-delay:4s;opacity:0.1}
+.fc6{width:150px;top:85%;animation:cfl 33s linear infinite;animation-delay:10s;opacity:0.07}
+.fc7{width:280px;top:12%;animation:cfl 55s linear infinite;animation-delay:25s;opacity:0.06}
+@keyframes cfl{0%{transform:translateX(-320px)}100%{transform:translateX(calc(100vw + 320px))}}
+
+/* ===== ANIMATED SVG DECORATORS ===== */
+.svg-deco{position:absolute;pointer-events:none;z-index:1}
+/* Pulsing rings */
+.pulse-ring{animation:pRing 3s ease-in-out infinite}
+@keyframes pRing{0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.3);opacity:0.1}}
+/* Breathing elements */
+.breathe{animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+/* Float + rotate */
+.float-rot{animation:fRot 8s ease-in-out infinite}
+@keyframes fRot{0%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-12px) rotate(5deg)}50%{transform:translateY(-5px) rotate(0deg)}75%{transform:translateY(-15px) rotate(-5deg)}100%{transform:translateY(0) rotate(0deg)}}
+/* Orbit */
+.orbit{animation:orb 20s linear infinite}
+@keyframes orb{to{transform:rotate(360deg)}}
+/* Scale bounce */
+.scale-bounce{animation:sBounce 2s ease-in-out infinite}
+@keyframes sBounce{0%,100%{transform:scale(1)}30%{transform:scale(1.25)}60%{transform:scale(0.95)}}
+/* Morphing blob */
+.morph{animation:morph 8s ease-in-out infinite}
+@keyframes morph{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}25%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}50%{border-radius:50% 60% 30% 60%/30% 70% 60% 40%}75%{border-radius:40% 30% 60% 50%/60% 40% 50% 70%}}
+/* Wiggle */
+.wiggle{animation:wig 2.5s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(0deg)}25%{transform:rotate(8deg)}75%{transform:rotate(-8deg)}}
+/* Elastic pop */
+.elastic{animation:elPop 3s ease-in-out infinite}
+@keyframes elPop{0%,100%{transform:scale(1) rotate(0deg)}20%{transform:scale(1.3) rotate(5deg)}40%{transform:scale(0.9) rotate(-3deg)}60%{transform:scale(1.1) rotate(2deg)}80%{transform:scale(0.97) rotate(-1deg)}}
+/* Typewriter blink */
+.blink{animation:blnk 1s step-end infinite}
+@keyframes blnk{0%,100%{opacity:1}50%{opacity:0}}
+/* Shimmer */
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);animation:shimAn 3s ease-in-out infinite}
+@keyframes shimAn{0%{left:-100%}100%{left:200%}}
+/* Draw line */
+.draw-line{stroke-dasharray:1000;stroke-dashoffset:1000;animation:drawL 3s ease forwards}
+@keyframes drawL{to{stroke-dashoffset:0}}
+/* Heartbeat */
+.heartbeat{animation:hbeat 1.5s ease-in-out infinite}
+@keyframes hbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.2)}28%{transform:scale(1)}42%{transform:scale(1.15)}56%{transform:scale(1)}}
+
+/* ===== FLOATING DATA PARTICLES ===== */
+.data-particle{position:fixed;z-index:1;pointer-events:none;font-family:'Space Mono',monospace;font-size:0.6rem;opacity:0;animation:dpFloat var(--d) linear infinite;animation-delay:var(--dl);color:var(--cy)}
+@keyframes dpFloat{0%{opacity:0;transform:translateY(100vh)}5%{opacity:0.25}50%{opacity:0.15}95%{opacity:0.2}100%{opacity:0;transform:translateY(-10vh)}}
+
+/* ===== PARTICLES ===== */
+.part{position:fixed;border-radius:50%;pointer-events:none;z-index:1;animation:pf var(--d) linear infinite}
+@keyframes pf{0%{transform:translateY(100vh) scale(0);opacity:0}8%{opacity:0.6}92%{opacity:0.4}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(5,10,24,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--gb)}
+.brand{font-family:'Space Mono',monospace;font-size:0.85rem;letter-spacing:3px}
+.brand b{color:var(--cy)}.brand span{color:var(--mg)}
+.nc{display:flex;gap:0.5rem;align-items:center}
+.nb{width:46px;height:46px;border:1px solid var(--gb);background:var(--gl);color:var(--t1);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all 0.3s}
+.nb:hover{background:var(--cy);color:var(--bg);border-color:var(--cy);transform:scale(1.15);box-shadow:0 0 25px rgba(0,229,255,0.5)}
+.sc{font-family:'Space Mono',monospace;font-size:0.9rem;color:var(--t2);min-width:70px;text-align:center}
+.npg{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--cy),var(--mg),var(--or));transition:width 0.6s;border-radius:0 3px 0 0}
+
+/* Side dots */
+.sdx{position:fixed;right:1rem;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+.sd{width:13px;height:13px;border-radius:50%;border:2px solid var(--t2);background:transparent;cursor:pointer;transition:all 0.4s}
+.sd.on{background:var(--cy);border-color:var(--cy);box-shadow:0 0 18px var(--cy);transform:scale(1.3)}
+.sd:hover::after{content:attr(data-l);position:absolute;right:24px;top:50%;transform:translateY(-50%);background:var(--bgc);color:var(--t1);padding:6px 14px;border-radius:8px;font-size:0.8rem;white-space:nowrap;border:1px solid var(--gb);backdrop-filter:blur(10px)}
+
+/* ===== SLIDES ===== */
+.vp{position:relative;width:100%;height:100vh;z-index:2}
+.sl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:5rem 4rem 3rem;opacity:0;visibility:hidden;transform:scale(0.88) translateY(50px);transition:all 0.9s cubic-bezier(0.65,0,0.35,1);will-change:transform,opacity}
+.sl.on{opacity:1;visibility:visible;transform:scale(1) translateY(0)}
+.si{width:100%;max-width:1350px;margin:0 auto;position:relative}
+
+/* Stagger */
+.sl.on .sg{animation:sIn 0.8s both}
+.sl.on .sg:nth-child(1){animation-delay:0.04s}
+.sl.on .sg:nth-child(2){animation-delay:0.1s}
+.sl.on .sg:nth-child(3){animation-delay:0.16s}
+.sl.on .sg:nth-child(4){animation-delay:0.22s}
+.sl.on .sg:nth-child(5){animation-delay:0.28s}
+.sl.on .sg:nth-child(6){animation-delay:0.34s}
+.sl.on .sg:nth-child(7){animation-delay:0.4s}
+.sl.on .sg:nth-child(8){animation-delay:0.46s}
+.sl.on .sg:nth-child(9){animation-delay:0.52s}
+@keyframes sIn{from{opacity:0;transform:translateY(35px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ===== COVER ===== */
+.cov-badge{display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border:1.5px solid var(--cy);border-radius:100px;font-family:'Space Mono',monospace;font-size:0.85rem;letter-spacing:2px;color:var(--cy);text-transform:uppercase;animation:fadeD 1s 0.2s both}
+.cov-t{font-size:clamp(4rem,10vw,8rem);font-weight:900;line-height:0.92;letter-spacing:-4px;margin:0.8rem 0;animation:fadeU 1s 0.4s both}
+.cov-t .gr{background:linear-gradient(135deg,var(--cy) 0%,var(--mg) 40%,var(--or) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:fadeU 1s 0.4s both,grShift 6s ease-in-out infinite}
+@keyframes grShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.cov-sub{font-size:clamp(1.2rem,2.8vw,1.7rem);font-weight:300;color:var(--t2);max-width:800px;margin:0.8rem auto;line-height:1.5;animation:fadeU 1s 0.6s both}
+.cov-meta{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0;animation:fadeU 1s 0.8s both}
+.cov-m{display:flex;align-items:center;gap:10px;font-size:1.05rem;color:var(--t2)}
+.cov-m i{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-style:normal}
+.btn-glow{padding:18px 50px;border:none;border-radius:100px;font-family:'Outfit';font-size:1.2rem;font-weight:700;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--cy),var(--mg));transition:all 0.3s;position:relative;animation:fadeU 1s 1s both;letter-spacing:0.5px}
+.btn-glow:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 12px 50px rgba(0,229,255,0.4)}
+.btn-glow::after{content:'';position:absolute;inset:-4px;background:linear-gradient(135deg,var(--cy),var(--mg));border-radius:inherit;z-index:-1;filter:blur(20px);opacity:0.5}
+@keyframes fadeU{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeD{from{opacity:0;transform:translateY(-35px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== Animated cover SVG decoration ===== */
+.cov-deco{position:absolute;pointer-events:none}
+.cov-deco.tl{top:-20px;left:-30px}
+.cov-deco.tr{top:-20px;right:-30px}
+.cov-deco.bl{bottom:-20px;left:-30px}
+.cov-deco.br{bottom:-20px;right:-30px}
+
+/* ===== SECTION ===== */
+.sn{font-family:'Space Mono',monospace;font-size:0.9rem;letter-spacing:3px;text-transform:uppercase;color:var(--cy);margin-bottom:0.6rem}
+.st{font-size:clamp(2.4rem,5.5vw,3.8rem);font-weight:900;line-height:1.05;margin-bottom:1rem}
+.st .hl{color:var(--cy)}
+.sd2{color:var(--t2);font-size:1.2rem;max-width:700px;line-height:1.7}
+
+/* ===== GLASS CARDS ===== */
+.gc{background:var(--bgc);backdrop-filter:blur(14px);border:1px solid var(--gb);border-radius:22px;padding:2rem;transition:all 0.5s;position:relative;overflow:hidden}
+.gc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent)}
+.gc:hover{border-color:rgba(0,229,255,0.35);transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.gc h3{font-size:1.35rem;font-weight:800;margin-bottom:0.5rem}
+.gc p{font-size:1rem;color:var(--t2);line-height:1.65}
+
+/* Shimmer effect on cards */
+.gc.shimmer:hover::after{animation:shimAn 1.5s ease-in-out}
+
+/* ===== INDEX ===== */
+.igr{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.ic{padding:2.2rem;cursor:pointer;min-height:200px;display:flex;flex-direction:column}
+.ic .ci{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-family:'Space Mono',monospace;font-weight:700;margin-bottom:1.2rem;transition:all 0.5s}
+.ic:hover .ci{transform:scale(1.2) rotate(5deg)}
+.ic h3{font-size:1.5rem;margin-bottom:0.7rem}
+.ic p{font-size:1.05rem}
+.ic::after{content:'→';position:absolute;bottom:1.5rem;right:1.8rem;font-size:1.8rem;color:var(--cy);opacity:0;transition:all 0.4s;transform:translateX(-15px)}
+.ic:hover::after{opacity:1;transform:translateX(0)}
+
+/* ===== ANIMATED SVG ILLUSTRATIONS per slide ===== */
+.slide-illust{position:absolute;right:0;top:50%;transform:translateY(-50%);pointer-events:none;opacity:0.08;z-index:0}
+
+/* ===== MODAL ===== */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all 0.4s}
+.mo.show{opacity:1;visibility:visible}
+.mb{background:linear-gradient(150deg,rgba(12,18,40,0.98),rgba(22,30,60,0.98));border:1px solid var(--gb);border-radius:26px;padding:2.8rem;max-width:720px;width:92%;max-height:85vh;overflow-y:auto;transform:scale(0.75) translateY(50px) rotate(-2deg);transition:all 0.6s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.mo.show .mb{transform:scale(1) translateY(0) rotate(0deg)}
+.mx{position:absolute;top:1.2rem;right:1.2rem;width:44px;height:44px;border-radius:50%;border:1px solid var(--gb);background:var(--gl);color:var(--t1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:all 0.3s}
+.mx:hover{background:var(--mg);border-color:var(--mg);transform:rotate(90deg) scale(1.1)}
+.mb h3{font-size:1.7rem;font-weight:800;margin-bottom:0.6rem}
+.mtag{display:inline-block;padding:5px 16px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
+.mb p{color:var(--t2);font-size:1.05rem;line-height:1.8;margin-bottom:0.9rem}
+.mb strong{color:var(--t1)}
+.hbox{background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.12);border-radius:14px;padding:1.2rem 1.4rem;margin:1rem 0;font-size:0.95rem;line-height:1.6}
+
+/* ===== DEFINITION ===== */
+.dlayout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:3.5rem;align-items:center}
+.dvis{position:relative;height:480px;display:flex;align-items:center;justify-content:center}
+.corb{border-radius:50%;position:absolute;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-weight:700;cursor:pointer;transition:all 0.6s;border:2.5px solid}
+.corb::before{content:'';position:absolute;inset:-12px;border-radius:50%;border:1.5px dashed;opacity:0.2;animation:ospin 28s linear infinite}
+@keyframes ospin{to{transform:rotate(360deg)}}
+.corb:hover{z-index:10;box-shadow:0 0 50px rgba(0,229,255,0.25)}
+.corb.cm{width:240px;height:240px;background:rgba(0,229,255,0.05);border-color:var(--cy);top:5px;left:50%;transform:translateX(-50%);font-size:1.05rem}
+.corb.cm:hover{transform:translateX(-50%) scale(1.12)!important}
+.corb.cm::before{border-color:var(--cy)}
+.corb.ch{width:170px;height:170px;background:rgba(224,64,251,0.05);border-color:var(--mg);bottom:25px;left:10%;font-size:0.95rem}
+.corb.ch::before{border-color:var(--mg)}
+.corb.co{width:130px;height:130px;background:rgba(255,109,0,0.05);border-color:var(--or);bottom:35px;right:10%;font-size:0.85rem}
+.corb.co::before{border-color:var(--or)}
+.olbl{font-size:0.72rem;color:var(--t2);font-weight:400}
+/* Animated cloud inside orb */
+.corb .orb-cloud{animation:breathe 3s ease-in-out infinite}
+.corb.ch .orb-cloud{animation:float-rot 5s ease-in-out infinite}
+.corb.co .orb-cloud{animation:wig 3s ease-in-out infinite}
+
+/* Connector beams */
+.beam{position:absolute;width:2px;background:linear-gradient(to bottom,var(--cy),var(--mg));opacity:0.2}
+.beam::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:var(--cy);top:0;left:-2px;animation:beamDot 2s ease-in-out infinite}
+@keyframes beamDot{0%,100%{top:0;opacity:0.8}50%{top:100%;opacity:0.2}}
+
+.dcard{border-radius:22px;padding:2rem;margin-bottom:1.2rem;border-left:4px solid}
+.dcard h3{font-size:1.35rem;margin-bottom:0.5rem}
+.dcard p{font-size:1.05rem;line-height:1.7}
+.kdiff{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.2rem}
+.kdi{background:var(--gl);border:1px solid var(--gb);border-radius:14px;padding:1.1rem;text-align:center;transition:all 0.3s}
+.kdi:hover{transform:scale(1.05);border-color:var(--cy)}
+.kdi .kl{font-size:0.72rem;color:var(--t2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.3rem}
+.kdi .kv{font-size:1.1rem;font-weight:800}
+.ibtn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border:1.5px solid var(--cy);border-radius:100px;background:transparent;color:var(--cy);font-family:'Outfit';font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.3s;letter-spacing:1px;text-transform:uppercase}
+.ibtn:hover{background:var(--cy);color:var(--bg);box-shadow:0 0 25px rgba(0,229,255,0.35);transform:scale(1.05)}
+
+/* ===== ARCHITECTURE ===== */
+.arch{position:relative;width:100%;height:400px;margin-top:2rem}
+.cnd{position:absolute;padding:18px 32px;border-radius:18px;border:2px solid;font-size:1rem;font-weight:700;text-align:center;cursor:pointer;transition:all 0.5s;background:var(--bgc);z-index:2}
+.cnd .cni{font-size:2.5rem;margin-bottom:6px;display:block}
+.cnd .cns{font-size:0.75rem;opacity:0.7;font-weight:400}
+.cnd:hover{transform:scale(1.15)!important;z-index:10;box-shadow:0 0 40px currentColor}
+.cnd.aws{border-color:var(--or);color:var(--or);top:3%;left:6%;animation:nf1 5s ease-in-out infinite}
+.cnd.azure{border-color:var(--bl);color:var(--bl);top:3%;right:6%;animation:nf1 5s ease-in-out infinite;animation-delay:0.8s}
+.cnd.gcp{border-color:var(--gr);color:var(--gr);bottom:3%;left:50%;transform:translateX(-50%);animation:nf1 5s ease-in-out infinite;animation-delay:1.6s}
+@keyframes nf1{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.cnd.gcp:hover{transform:translateX(-50%) scale(1.15)!important}
+.dbhub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:50%;border:3px solid var(--cy);background:rgba(0,229,255,0.03);display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:800;color:var(--cy);z-index:2}
+.dbhub::before{content:'';position:absolute;inset:-16px;border-radius:50%;border:1.5px dashed var(--cy);opacity:0.15;animation:ospin 18s linear infinite}
+.dbhub::after{content:'';position:absolute;inset:-32px;border-radius:50%;border:1px dotted rgba(0,229,255,0.08);animation:ospin 35s linear infinite reverse}
+.dbhub .db-icon{font-size:2.5rem;animation:breathe 3s ease-in-out infinite}
+/* SVG connection lines */
+.asvg{position:absolute;inset:0;pointer-events:none;z-index:1}
+.asvg line{stroke-dasharray:12 6}
+.asvg line{animation:dashF 2s linear infinite}
+@keyframes dashF{to{stroke-dashoffset:-36}}
+/* Animated data packets on lines */
+.packet{position:absolute;width:8px;height:8px;border-radius:50%;z-index:3;pointer-events:none}
+.pkt-aws{background:var(--or);animation:pktAws 4s ease-in-out infinite}
+.pkt-azure{background:var(--bl);animation:pktAzure 4s ease-in-out infinite;animation-delay:1.3s}
+.pkt-gcp{background:var(--gr);animation:pktGcp 4s ease-in-out infinite;animation-delay:2.6s}
+@keyframes pktAws{0%{top:12%;left:18%;opacity:0}10%{opacity:1}50%{top:46%;left:46%;opacity:1}90%{opacity:0}100%{top:12%;left:18%;opacity:0}}
+@keyframes pktAzure{0%{top:12%;right:18%;opacity:0}10%{opacity:1}50%{top:46%;right:46%;opacity:1}90%{opacity:0}100%{top:12%;right:18%;opacity:0}}
+@keyframes pktGcp{0%{bottom:12%;left:50%;opacity:0}10%{opacity:1}50%{bottom:46%;left:50%;opacity:1}90%{opacity:0}100%{bottom:12%;left:50%;opacity:0}}
+
+/* ===== REPLICATION ===== */
+.rgr{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem;margin-top:2.5rem}
+.rc{text-align:center;padding:2rem 1.2rem;cursor:pointer}
+.rc .ri{width:70px;height:70px;border-radius:18px;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;font-size:2rem;transition:all 0.6s}
+.rc:hover .ri{transform:rotateY(180deg) scale(1.15);box-shadow:0 0 25px currentColor}
+.rc h3{font-size:1.1rem;margin-bottom:0.5rem}
+.rc p{font-size:0.9rem;color:var(--t2);line-height:1.45;min-height:50px}
+.rtg{font-size:0.68rem;padding:5px 14px;border-radius:100px;display:inline-block;margin-top:0.8rem;font-weight:700;letter-spacing:0.5px}
+/* Animated connector between rep cards */
+.rc::after{content:'';position:absolute;right:-10px;top:50%;width:20px;height:2px;background:linear-gradient(90deg,transparent,var(--gb));opacity:0.5}
+.rc:last-child::after{display:none}
+
+/* ===== BENEFITS ===== */
+.bgr{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem}
+.bc{padding:2.8rem 2rem;text-align:center;cursor:pointer}
+.bc .bn{font-size:4rem;font-weight:900;font-family:'Space Mono',monospace;line-height:1;margin-bottom:0.3rem;transition:all 0.5s}
+.bc:hover .bn{transform:scale(1.15)}
+.bc .bl{font-size:0.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--t2);margin-bottom:1.3rem}
+.bc h3{font-size:1.35rem;margin-bottom:0.9rem}
+.bc p{font-size:1rem;line-height:1.65}
+.bc .bx{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--gb);font-size:0.9rem;color:var(--t2);font-style:italic}
+
+/* ===== CHALLENGES ===== */
+.cgr{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:2.5rem}
+.cc{padding:2.2rem;cursor:pointer;display:flex;gap:1.4rem;align-items:flex-start}
+.cc .cci{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;transition:all 0.5s}
+.cc:hover .cci{transform:scale(1.2) rotate(8deg)}
+.cc h3{font-size:1.25rem;margin-bottom:0.5rem}
+.cc p{font-size:0.95rem;color:var(--t2);line-height:1.6}
+.cst{margin-top:0.7rem;display:inline-block;padding:5px 12px;border-radius:10px;font-size:0.78rem;font-weight:700}
+
+/* ===== EXAMPLES ===== */
+.egr{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:2.5rem}
+.ec{padding:2.2rem;display:flex;gap:1.4rem;cursor:pointer}
+.ec .el{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:900;flex-shrink:0;transition:all 0.5s}
+.ec:hover .el{transform:scale(1.15) rotate(-5deg)}
+.ec h3{font-size:1.2rem;margin-bottom:0.4rem}
+.ec .ep{font-size:0.72rem;padding:4px 12px;border-radius:100px;display:inline-block;font-weight:700;margin-bottom:0.6rem}
+.ec p{font-size:0.95rem;color:var(--t2);line-height:1.55}
+
+/* ===== TABLE ===== */
+.ctb{width:100%;border-collapse:separate;border-spacing:0;margin-top:2.5rem;font-size:1rem}
+.ctb th{padding:16px 20px;text-align:left;font-weight:700;color:var(--cy);border-bottom:2px solid rgba(0,229,255,0.2);font-size:0.82rem;letter-spacing:1.5px;text-transform:uppercase}
+.ctb td{padding:16px 20px;border-bottom:1px solid var(--gb);color:var(--t2);font-size:0.95rem;transition:all 0.3s}
+.ctb tr:hover td{background:rgba(0,229,255,0.03);color:var(--t1)}
+.ctb td:first-child{font-weight:700;color:var(--t1)}
+
+/* ===== QUIZ ===== */
+.qq{font-size:1.35rem;font-weight:700;margin-bottom:1.3rem;line-height:1.4}
+.qos{display:grid;gap:0.9rem}
+.qo{padding:1.3rem 1.6rem;border:1.5px solid var(--gb);border-radius:16px;background:var(--gl);cursor:pointer;transition:all 0.35s;font-size:1.05rem;display:flex;align-items:center;gap:14px}
+.qo:hover{border-color:var(--cy);background:rgba(0,229,255,0.04);transform:translateX(8px);box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.qo.ok{border-color:var(--gr);background:rgba(0,230,118,0.1);color:var(--gr);transform:scale(1.02)}
+.qo.no{border-color:var(--rd);background:rgba(255,82,82,0.08);color:var(--rd)}
+.ql{width:36px;height:36px;border-radius:50%;border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;flex-shrink:0;transition:all 0.3s}
+.qo.ok .ql{background:var(--gr);color:var(--bg);border-color:var(--gr)}
+.qo.no .ql{background:var(--rd);color:#fff;border-color:var(--rd)}
+
+/* ===== CLOSING ===== */
+.clb{font-size:clamp(4.5rem,12vw,9rem);font-weight:900;background:linear-gradient(135deg,var(--cy),var(--mg),var(--or));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;background-size:200% 200%;animation:grShift 4s ease-in-out infinite}
+.clq{font-family:'Playfair Display',serif;font-style:italic;font-size:1.6rem;color:var(--t2);max-width:700px;margin:1.2rem auto 2rem;line-height:1.7}
+.trow{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.trow span{padding:10px 24px;border-radius:100px;border:1.5px solid;font-size:0.9rem;font-family:'Space Mono',monospace;transition:all 0.4s;cursor:default}
+.trow span:hover{transform:scale(1.1) translateY(-3px);box-shadow:0 0 20px currentColor}
+
+/* ===== REFS ===== */
+.rfl{margin-top:1.8rem;display:grid;gap:0.8rem}
+.rfi{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.3rem;border-radius:14px;background:var(--gl);border:1px solid var(--gb);font-size:0.85rem;color:var(--t2);line-height:1.5;transition:all 0.3s}
+.rfi:hover{border-color:var(--cy);background:rgba(0,229,255,0.03);transform:translateX(5px)}
+.rfn{width:28px;height:28px;border-radius:50%;background:var(--cy);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.68rem;flex-shrink:0}
+
+/* Key hint */
+.kh{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:999;font-size:0.78rem;color:var(--t2);font-family:'Space Mono',monospace;opacity:0.35;display:flex;gap:1.5rem}
+.kh kbd{padding:4px 12px;border:1px solid var(--gb);border-radius:6px;background:var(--gl);font-size:0.72rem}
+
+@media(max-width:1000px){.dlayout,.bgr,.egr,.cgr{grid-template-columns:1fr}.rgr{grid-template-columns:repeat(3,1fr)}.igr{grid-template-columns:repeat(2,1fr)}.sl{padding:4.5rem 1.5rem 2rem}.sdx{display:none}.arch{height:300px}}
+@media(max-width:600px){.rgr,.igr{grid-template-columns:1fr 1fr}.cov-t{letter-spacing:-2px}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--cy);border-radius:5px}
+</style>
+</head>
+<body>
+
+<div class="uni">
+  <div class="stars" id="stars"></div>
+  <div class="grd"></div>
+  <div id="parts"></div>
+</div>
+
+<!-- 7 FLOATING CLOUDS -->
+<div class="fcloud fc1"><svg viewBox="0 0 260 100"><ellipse cx="130" cy="60" rx="110" ry="32" fill="rgba(0,229,255,0.18)"/><ellipse cx="85" cy="48" rx="65" ry="38" fill="rgba(0,229,255,0.14)"/><ellipse cx="185" cy="52" rx="55" ry="28" fill="rgba(0,229,255,0.12)"/></svg></div>
+<div class="fcloud fc2"><svg viewBox="0 0 200 80"><ellipse cx="100" cy="50" rx="85" ry="26" fill="rgba(224,64,251,0.14)"/><ellipse cx="60" cy="40" rx="50" ry="30" fill="rgba(224,64,251,0.11)"/><ellipse cx="150" cy="45" rx="42" ry="22" fill="rgba(224,64,251,0.09)"/></svg></div>
+<div class="fcloud fc3"><svg viewBox="0 0 300 110"><ellipse cx="150" cy="65" rx="130" ry="38" fill="rgba(68,138,255,0.13)"/><ellipse cx="90" cy="52" rx="70" ry="40" fill="rgba(68,138,255,0.1)"/><ellipse cx="220" cy="58" rx="60" ry="30" fill="rgba(68,138,255,0.08)"/></svg></div>
+<div class="fcloud fc4"><svg viewBox="0 0 180 70"><ellipse cx="90" cy="42" rx="75" ry="24" fill="rgba(0,230,118,0.12)"/><ellipse cx="55" cy="35" rx="45" ry="28" fill="rgba(0,230,118,0.09)"/></svg></div>
+<div class="fcloud fc5"><svg viewBox="0 0 220 85"><ellipse cx="110" cy="50" rx="95" ry="30" fill="rgba(255,109,0,0.12)"/><ellipse cx="65" cy="42" rx="55" ry="32" fill="rgba(255,109,0,0.09)"/><ellipse cx="170" cy="48" rx="45" ry="22" fill="rgba(255,109,0,0.07)"/></svg></div>
+<div class="fcloud fc6"><svg viewBox="0 0 150 60"><ellipse cx="75" cy="35" rx="65" ry="22" fill="rgba(255,214,0,0.1)"/><ellipse cx="45" cy="28" rx="38" ry="22" fill="rgba(255,214,0,0.07)"/></svg></div>
+<div class="fcloud fc7"><svg viewBox="0 0 280 100"><ellipse cx="140" cy="58" rx="120" ry="35" fill="rgba(224,64,251,0.08)"/><ellipse cx="80" cy="45" rx="65" ry="38" fill="rgba(224,64,251,0.06)"/><ellipse cx="210" cy="52" rx="55" ry="26" fill="rgba(224,64,251,0.05)"/></svg></div>
+
+<!-- DATA PARTICLES (floating code/SQL) -->
+<div id="dparts"></div>
+
+<nav>
+  <div class="brand"><b>Multi-Cloud</b> <span>Databases</span></div>
+  <div class="nc">
+    <button class="nb" onclick="prev()">◀</button>
+    <span class="sc" id="sc">1 / 12</span>
+    <button class="nb" onclick="next()">▶</button>
+  </div>
+  <div class="npg" id="np" style="width:8%"></div>
+</nav>
+
+<div class="sdx" id="sdx"></div>
+
+<div class="mo" id="mo" onclick="if(event.target===this)xmo()">
+  <div class="mb"><button class="mx" onclick="xmo()">✕</button><div id="mc"></div></div>
+</div>
+
+<div class="vp">
+
+<!-- SLIDE 0: COVER -->
+<div class="sl on" data-l="Inicio">
+  <div class="si" style="text-align:center;position:relative">
+    <!-- Animated decorators -->
+    <svg class="cov-deco tl" width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="1" class="pulse-ring"/><circle cx="60" cy="60" r="35" fill="none" stroke="rgba(0,229,255,0.15)" stroke-width="0.5" class="orbit"/></svg>
+    <svg class="cov-deco tr" width="100" height="100" viewBox="0 0 100 100"><rect x="15" y="15" width="70" height="70" rx="20" fill="none" stroke="rgba(224,64,251,0.1)" stroke-width="1" class="float-rot"/></svg>
+    <svg class="cov-deco bl" width="80" height="80" viewBox="0 0 80 80"><polygon points="40,5 75,65 5,65" fill="none" stroke="rgba(0,230,118,0.1)" stroke-width="1" class="wiggle"/></svg>
+    <svg class="cov-deco br" width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="30" fill="rgba(255,109,0,0.04)" class="breathe"/><circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,109,0,0.08)" stroke-width="0.5" class="orbit"/></svg>
+    
+    <div class="cov-badge">☁ Tema 7 · Aula Invertida · Bases de Datos Relacionales</div>
+    <h1 class="cov-t"><span class="gr">Multi-Cloud</span><br>Databases</h1>
+    <p class="cov-sub">Definición, replicación, beneficios y desafíos de las bases de datos distribuidas en múltiples nubes</p>
+    <div class="cov-meta">
+      <div class="cov-m"><i style="background:var(--cy);color:var(--bg)" class="heartbeat">⛁</i> Bases de Datos Relacionales</div>
+      <div class="cov-m"><i style="background:var(--mg);color:var(--bg)" class="heartbeat">◈</i> Universidad Fidélitas</div>
+      <div class="cov-m"><i style="background:var(--or);color:var(--bg)" class="heartbeat">⬡</i> 2026</div>
+    </div>
+    <button class="btn-glow" onclick="next()">Empezar Exploración →</button>
+  </div>
+</div>
+
+<!-- SLIDE 1: INDEX -->
+<div class="sl" data-l="Índice">
+  <div class="si">
+    <div class="sn sg">// Contenidos</div>
+    <h2 class="st sg">Mapa de <span class="hl">Navegación</span></h2>
+    <p class="sd2 sg">Explora cada sección interactivamente. Haz clic en cualquier tema para saltar directamente.</p>
+    <div class="igr">
+      <div class="gc ic shimmer sg" onclick="go(2)"><div class="ci" style="background:rgba(0,229,255,0.1);color:var(--cy)"><span class="scale-bounce">01</span></div><h3>Definición</h3><p>Multi-cloud vs Híbrido: conceptos clave, diferencias y cuándo usar cada uno</p></div>
+      <div class="gc ic shimmer sg" onclick="go(3)"><div class="ci" style="background:rgba(224,64,251,0.1);color:var(--mg)"><span class="scale-bounce">02</span></div><h3>Arquitectura</h3><p>Diagrama animado de despliegue multi-cloud con AWS, Azure y GCP</p></div>
+      <div class="gc ic shimmer sg" onclick="go(4)"><div class="ci" style="background:rgba(255,109,0,0.1);color:var(--or)"><span class="scale-bounce">03</span></div><h3>Replicación</h3><p>5 tipos: síncrona, asíncrona, snapshot, transaccional y merge</p></div>
+      <div class="gc ic shimmer sg" onclick="go(5)"><div class="ci" style="background:rgba(0,230,118,0.1);color:var(--gr)"><span class="scale-bounce">04</span></div><h3>Beneficios</h3><p>Resiliencia, independencia del proveedor y continuidad del negocio</p></div>
+      <div class="gc ic shimmer sg" onclick="go(6)"><div class="ci" style="background:rgba(255,214,0,0.1);color:var(--yl)"><span class="scale-bounce">05</span></div><h3>Desafíos</h3><p>Latencia, seguridad fragmentada, costos ocultos y complejidad</p></div>
+      <div class="gc ic shimmer sg" onclick="go(7)"><div class="ci" style="background:rgba(68,138,255,0.1);color:var(--bl)"><span class="scale-bounce">06</span></div><h3>Tecnologías</h3><p>Aurora, Spanner, CockroachDB y TiDB en detalle</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: DEFINITION -->
+<div class="sl" data-l="Definición">
+  <div class="si">
+    <div class="dlayout">
+      <div>
+        <div class="sn sg">// 01 · Conceptos</div>
+        <h2 class="st sg">¿Qué es <span class="hl">Multi-Cloud</span>?</h2>
+        <p class="sd2 sg" style="margin-bottom:1.5rem">Estrategia que utiliza infraestructura de <strong style="color:var(--cy)">dos o más proveedores de nube pública</strong> en lugar de depender de uno solo.</p>
+        <div class="gc dcard sg" style="border-left-color:var(--cy)">
+          <h3 style="color:var(--cy)"><span class="elastic" style="display:inline-block">☁</span> Multi-Cloud</h3>
+          <p>Combina <strong>múltiples nubes públicas</strong> (AWS + Azure + GCP) para flexibilidad, resiliencia y optimización. Workloads distribuidos exclusivamente entre proveedores públicos.</p>
+        </div>
+        <div class="gc dcard sg" style="border-left-color:var(--mg)">
+          <h3 style="color:var(--mg)"><span class="wiggle" style="display:inline-block">⬡</span> Nube Híbrida</h3>
+          <p>Mezcla <strong>nubes públicas con privadas u on-premises</strong> para control y cumplimiento normativo. Datos sensibles permanecen en infraestructura propia.</p>
+        </div>
+        <div class="kdiff sg">
+          <div class="kdi"><div class="kl">Multi-Cloud</div><div class="kv" style="color:var(--cy)">Solo públicas</div></div>
+          <div class="kdi"><div class="kl">Híbrido</div><div class="kv" style="color:var(--mg)">Pública + Privada</div></div>
+        </div>
+        <button class="ibtn sg" style="margin-top:1.2rem" onclick="omo('def')">+ Más información</button>
+      </div>
+      <div class="dvis sg">
+        <div class="corb cm" onclick="omo('def')">
+          <span class="orb-cloud" style="font-size:2.5rem">☁</span>
+          <span>Multi-Cloud</span>
+          <span class="olbl">Solo nubes públicas</span>
+        </div>
+        <div class="beam" style="height:80px;left:50%;top:54%"></div>
+        <div class="corb ch" onclick="omo('hybrid')">
+          <span class="orb-cloud" style="font-size:1.8rem">⬡</span>
+          <span>Híbrido</span>
+          <span class="olbl">Pública + Privada</span>
+        </div>
+        <div class="corb co">
+          <span class="orb-cloud" style="font-size:1.4rem">▣</span>
+          <span>On-Prem</span>
+          <span class="olbl">Local</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: ARCHITECTURE -->
+<div class="sl" data-l="Arquitectura">
+  <div class="si">
+    <div class="sn sg">// 02 · Arquitectura</div>
+    <h2 class="st sg">Despliegue <span class="hl">Multi-Cloud</span></h2>
+    <p class="sd2 sg">Los datos se replican entre proveedores. <strong>Haz clic</strong> en cada nodo. Observa los paquetes de datos viajando.</p>
+    <div class="arch sg">
+      <svg class="asvg" viewBox="0 0 900 400">
+        <line x1="150" y1="75" x2="450" y2="200" stroke="rgba(255,109,0,0.2)" stroke-width="2" stroke-dasharray="12 6"><animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2s" repeatCount="indefinite"/></line>
+        <line x1="750" y1="75" x2="450" y2="200" stroke="rgba(68,138,255,0.2)" stroke-width="2" stroke-dasharray="12 6"><animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2s" repeatCount="indefinite"/></line>
+        <line x1="450" y1="345" x2="450" y2="200" stroke="rgba(0,230,118,0.2)" stroke-width="2" stroke-dasharray="12 6"><animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2s" repeatCount="indefinite"/></line>
+      </svg>
+      <!-- Data packets traveling -->
+      <div class="packet pkt-aws"></div>
+      <div class="packet pkt-azure"></div>
+      <div class="packet pkt-gcp"></div>
+      
+      <div class="cnd aws" onclick="omo('aws')"><span class="cni elastic">⬡</span>AWS<br><span class="cns">Aurora Global DB</span></div>
+      <div class="cnd azure" onclick="omo('azure')"><span class="cni elastic">◇</span>Azure<br><span class="cns">Cosmos DB</span></div>
+      <div class="dbhub"><div class="db-icon">⛁</div><span style="font-size:0.9rem">Multi-Cloud</span><span style="font-size:0.7rem;opacity:0.6">Database</span></div>
+      <div class="cnd gcp" onclick="omo('gcp')"><span class="cni elastic">△</span>GCP<br><span class="cns">Cloud Spanner</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: REPLICATION -->
+<div class="sl" data-l="Replicación">
+  <div class="si">
+    <div class="sn sg">// 03 · Replicación</div>
+    <h2 class="st sg">Tipos de <span class="hl">Replicación</span></h2>
+    <p class="sd2 sg">Haz clic en cada tipo para ver detalles, casos de uso y limitaciones.</p>
+    <div class="rgr">
+      <div class="gc rc sg" onclick="omo('sync')"><div class="ri" style="background:rgba(0,229,255,0.1);color:var(--cy)">⇋</div><h3>Síncrona</h3><p>Replica antes de confirmar la transacción</p><span class="rtg" style="background:rgba(0,229,255,0.1);color:var(--cy)">Consistencia fuerte</span></div>
+      <div class="gc rc sg" onclick="omo('async')"><div class="ri" style="background:rgba(224,64,251,0.1);color:var(--mg)">⇝</div><h3>Asíncrona</h3><p>Confirma primero, replica después</p><span class="rtg" style="background:rgba(224,64,251,0.1);color:var(--mg)">Alto rendimiento</span></div>
+      <div class="gc rc sg" onclick="omo('snap')"><div class="ri" style="background:rgba(255,109,0,0.1);color:var(--or)"><span class="breathe" style="display:inline-block">📷</span></div><h3>Snapshot</h3><p>Copia periódica completa de la BD</p><span class="rtg" style="background:rgba(255,109,0,0.1);color:var(--or)">Datos estáticos</span></div>
+      <div class="gc rc sg" onclick="omo('trans')"><div class="ri" style="background:rgba(0,230,118,0.1);color:var(--gr)"><span class="orbit" style="display:inline-block">↻</span></div><h3>Transaccional</h3><p>Transacciones en near real-time</p><span class="rtg" style="background:rgba(0,230,118,0.1);color:var(--gr)">Equilibrio ideal</span></div>
+      <div class="gc rc sg" onclick="omo('merge')"><div class="ri" style="background:rgba(68,138,255,0.1);color:var(--bl)"><span class="scale-bounce" style="display:inline-block">⊕</span></div><h3>Merge</h3><p>Bidireccional + resolución de conflictos</p><span class="rtg" style="background:rgba(68,138,255,0.1);color:var(--bl)">Multi-sitio</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: BENEFITS -->
+<div class="sl" data-l="Beneficios">
+  <div class="si">
+    <div class="sn sg">// 04 · Beneficios</div>
+    <h2 class="st sg">¿Por qué <span class="hl">Multi-Cloud</span>?</h2>
+    <div class="bgr">
+      <div class="gc bc shimmer sg" onclick="omo('resilience')"><div class="bn" style="color:var(--cy)"><span class="heartbeat" style="display:inline-block">82%</span></div><div class="bl">Mejor preparación DR</div><h3>Resiliencia</h3><p>Distribuye workloads y failover entre proveedores, reduciendo downtime ante outages.</p><div class="bx">Si AWS cae, Azure y GCP mantienen las operaciones activas.</div></div>
+      <div class="gc bc shimmer sg" onclick="omo('independence')"><div class="bn" style="color:var(--mg)"><span class="heartbeat" style="display:inline-block">0%</span></div><div class="bl">Vendor Lock-in</div><h3>Independencia</h3><p>Evita dependencia de un solo proveedor. Mayor poder de negociación y libertad.</p><div class="bx">65% reportan tiempos de lanzamiento más rápidos.</div></div>
+      <div class="gc bc shimmer sg" onclick="omo('continuity')"><div class="bn" style="color:var(--gr)"><span class="heartbeat" style="display:inline-block">99.99%</span></div><div class="bl">Disponibilidad</div><h3>Continuidad</h3><p>Redundancia geográfica y DR mejorado. Operaciones continúan ante cualquier fallo.</p><div class="bx">Soberanía de datos en regiones específicas.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: CHALLENGES -->
+<div class="sl" data-l="Desafíos">
+  <div class="si">
+    <div class="sn sg">// 05 · Desafíos</div>
+    <h2 class="st sg">Los <span class="hl">Retos</span> Reales</h2>
+    <p class="sd2 sg">Haz clic en cada desafío para profundizar en soluciones.</p>
+    <div class="cgr">
+      <div class="gc cc shimmer sg" onclick="omo('latency')"><div class="cci" style="background:rgba(0,229,255,0.1);color:var(--cy)"><span class="elastic">⚡</span></div><div><h3>Latencia</h3><p>Coordinación inter-nodo agrega ~5ms mínimo. Distancias entre nubes impactan replicación real-time.</p><span class="cst" style="background:rgba(0,229,255,0.1);color:var(--cy)">Límite síncrona: ~300km</span></div></div>
+      <div class="gc cc shimmer sg" onclick="omo('security')"><div class="cci" style="background:rgba(224,64,251,0.1);color:var(--mg)"><span class="wiggle">🔒</span></div><div><h3>Seguridad</h3><p>Superficie de ataque ampliada. Políticas IAM inconsistentes entre AWS, Azure y GCP.</p><span class="cst" style="background:rgba(224,64,251,0.1);color:var(--mg)">Solución: Zero-Trust</span></div></div>
+      <div class="gc cc shimmer sg" onclick="omo('costs')"><div class="cci" style="background:rgba(255,109,0,0.1);color:var(--or)"><span class="scale-bounce">💰</span></div><div><h3>Costos</h3><p>Egress fees entre nubes ($0.01-0.09/GB). Pricing variado y gastos inesperados.</p><span class="cst" style="background:rgba(255,109,0,0.1);color:var(--or)">Solución: FinOps</span></div></div>
+      <div class="gc cc shimmer sg" onclick="omo('complexity')"><div class="cci" style="background:rgba(0,230,118,0.1);color:var(--gr)"><span class="float-rot">⚙</span></div><div><h3>Complejidad</h3><p>Múltiples APIs, herramientas nativas diferentes, skills gaps del equipo técnico.</p><span class="cst" style="background:rgba(0,230,118,0.1);color:var(--gr)">Solución: Data Fabrics</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: EXAMPLES -->
+<div class="sl" data-l="Tecnologías">
+  <div class="si">
+    <div class="sn sg">// 06 · Tecnologías</div>
+    <h2 class="st sg">Bases de Datos <span class="hl">Distribuidas</span></h2>
+    <div class="egr">
+      <div class="gc ec shimmer sg" onclick="omo('aurora')"><div class="el" style="background:rgba(255,109,0,0.1);color:var(--or)"><span class="breathe" style="display:inline-block">A</span></div><div><span class="ep" style="background:rgba(255,109,0,0.1);color:var(--or)">AWS</span><h3>Aurora Global Database</h3><p>Réplicas de lectura cross-region. Compatible MySQL/PostgreSQL. Un solo master — no es SQL distribuido verdadero.</p></div></div>
+      <div class="gc ec shimmer sg" onclick="omo('spanner')"><div class="el" style="background:rgba(0,230,118,0.1);color:var(--gr)"><span class="breathe" style="display:inline-block">S</span></div><div><span class="ep" style="background:rgba(0,230,118,0.1);color:var(--gr)">GCP</span><h3>Cloud Spanner</h3><p>SQL distribuido global con TrueTime API (relojes atómicos + GPS). Inspiró a CockroachDB.</p></div></div>
+      <div class="gc ec shimmer sg" onclick="omo('crdb')"><div class="el" style="background:rgba(0,229,255,0.1);color:var(--cy)"><span class="breathe" style="display:inline-block">C</span></div><div><span class="ep" style="background:rgba(0,229,255,0.1);color:var(--cy)">Multi-Cloud</span><h3>CockroachDB</h3><p>SQL distribuido cloud-native. Cada nodo lee y escribe. Consenso Raft. Cualquier nube.</p></div></div>
+      <div class="gc ec shimmer sg" onclick="omo('tidb')"><div class="el" style="background:rgba(224,64,251,0.1);color:var(--mg)"><span class="breathe" style="display:inline-block">T</span></div><div><span class="ep" style="background:rgba(224,64,251,0.1);color:var(--mg)">Open Source</span><h3>TiDB</h3><p>HTAP: TiKV (OLTP) + TiFlash (OLAP). Compatible MySQL. Replicación real-time entre stores.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: TABLE -->
+<div class="sl" data-l="Comparación">
+  <div class="si">
+    <div class="sn sg">// 07 · Comparativa</div>
+    <h2 class="st sg">Multi-Cloud vs <span class="hl">Híbrido</span></h2>
+    <table class="ctb sg">
+      <thead><tr><th>Característica</th><th style="color:var(--cy)">☁ Multi-Cloud</th><th style="color:var(--mg)">⬡ Híbrido</th></tr></thead>
+      <tbody>
+        <tr><td>Infraestructura</td><td>Solo nubes públicas</td><td>Pública + Privada / On-prem</td></tr>
+        <tr><td>Objetivo</td><td>Flexibilidad y evitar lock-in</td><td>Control y cumplimiento</td></tr>
+        <tr><td>Interoperabilidad</td><td>No requiere integración directa</td><td>Integración estrecha</td></tr>
+        <tr><td>Datos sensibles</td><td>Distribuidos en nubes públicas</td><td>Críticos permanecen on-prem</td></tr>
+        <tr><td>Complejidad</td><td>Alta (múltiples APIs/vendors)</td><td>Media-Alta (dos entornos)</td></tr>
+        <tr><td>Costo</td><td>Variable, optimizable</td><td>Inversión infra + nube</td></tr>
+        <tr><td>Ejemplo</td><td>AWS + Azure + GCP</td><td>Data center + AWS</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 9: QUIZ -->
+<div class="sl" data-l="Quiz">
+  <div class="si">
+    <div class="sn sg">// 08 · Preguntas Interactivas</div>
+    <h2 class="st sg">¿Cuánto <span class="hl">aprendiste</span>?</h2>
+    <div class="sg" style="margin-top:2rem">
+      <p class="qq">1. ¿Principal diferencia entre multi-cloud y nube híbrida?</p>
+      <div class="qos" id="q1">
+        <div class="qo" onclick="qa(this,0)"><span class="ql">A</span>Multi-cloud es más barato</div>
+        <div class="qo" onclick="qa(this,1)"><span class="ql">B</span>Multi-cloud usa solo públicas; híbrido mezcla pública con privada</div>
+        <div class="qo" onclick="qa(this,0)"><span class="ql">C</span>Híbrido usa más proveedores</div>
+      </div>
+    </div>
+    <div class="sg" style="margin-top:2rem">
+      <p class="qq">2. ¿Qué replicación ofrece consistencia fuerte pero mayor latencia?</p>
+      <div class="qos" id="q2">
+        <div class="qo" onclick="qa(this,0)"><span class="ql">A</span>Asíncrona</div>
+        <div class="qo" onclick="qa(this,1)"><span class="ql">B</span>Síncrona</div>
+        <div class="qo" onclick="qa(this,0)"><span class="ql">C</span>Merge</div>
+      </div>
+    </div>
+    <div class="sg" style="margin-top:2rem">
+      <p class="qq">3. ¿Cuál NO es SQL distribuido verdadero?</p>
+      <div class="qos" id="q3">
+        <div class="qo" onclick="qa(this,0)"><span class="ql">A</span>CockroachDB</div>
+        <div class="qo" onclick="qa(this,1)"><span class="ql">B</span>Aurora Global Database</div>
+        <div class="qo" onclick="qa(this,0)"><span class="ql">C</span>Cloud Spanner</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: REFS -->
+<div class="sl" data-l="Referencias">
+  <div class="si">
+    <div class="sn sg">// 09 · Referencias</div>
+    <h2 class="st sg"><span class="hl">Bibliografía</span> APA 7</h2>
+    <div class="rfl">
+      <div class="rfi sg"><span class="rfn">1</span>Severalnines. (2022). What is a multi-cloud database? severalnines.com</div>
+      <div class="rfi sg"><span class="rfn">2</span>StrongDM. (2025). Multi-cloud vs hybrid cloud: Key differences. strongdm.com</div>
+      <div class="rfi sg"><span class="rfn">3</span>Hokstad. (2025). Best practices for multi-cloud DB replication. hokstadconsulting.com</div>
+      <div class="rfi sg"><span class="rfn">4</span>CloudEagle. (2025). Multi cloud benefits. cloudeagle.ai</div>
+      <div class="rfi sg"><span class="rfn">5</span>Cockroach Labs. (2024). What is a multi-cloud database. cockroachlabs.com</div>
+      <div class="rfi sg"><span class="rfn">6</span>HPE. (2026). Hybrid cloud vs multi-cloud. hpe.com</div>
+      <div class="rfi sg"><span class="rfn">7</span>UMA Technology. (2025). Latency analysis for cloud-native DB replicas. umatechnology.org</div>
+      <div class="rfi sg"><span class="rfn">8</span>Tenable. (2025). Multi-cloud security challenges. tenable.com</div>
+      <div class="rfi sg"><span class="rfn">9</span>Fortinet. (n.d.). Multi-cloud security best practices. fortinet.com</div>
+      <div class="rfi sg"><span class="rfn">10</span>CloudThat. (2025). Multi-cloud cost challenges. cloudthat.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: CLOSING -->
+<div class="sl" data-l="Cierre" style="text-align:center">
+  <div class="si" style="text-align:center;position:relative">
+    <svg class="cov-deco tl" width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="55" fill="none" stroke="rgba(0,229,255,0.12)" stroke-width="1.5" class="pulse-ring"/><circle cx="70" cy="70" r="40" fill="none" stroke="rgba(0,229,255,0.08)" stroke-width="0.5" class="orbit"/></svg>
+    <svg class="cov-deco br" width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="45" fill="none" stroke="rgba(224,64,251,0.1)" stroke-width="1" class="pulse-ring"/></svg>
+    <div class="clb sg">¡Gracias!</div>
+    <p class="clq sg">"La nube no es un lugar, es una forma de hacer las cosas. Multi-cloud es la libertad de elegir cómo."</p>
+    <div class="sg">
+      <p style="font-size:1.3rem;font-weight:800">Fundamentos de Diseño de Base de Datos Relacionales</p>
+      <p style="margin-top:0.5rem;color:var(--t2);font-size:1.15rem">Universidad Fidélitas · 2026</p>
+    </div>
+    <div class="trow sg">
+      <span style="border-color:var(--cy);color:var(--cy)">☁ Multi-Cloud</span>
+      <span style="border-color:var(--mg);color:var(--mg)">⬡ Híbrido</span>
+      <span style="border-color:var(--or);color:var(--or)">⇋ Replicación</span>
+      <span style="border-color:var(--gr);color:var(--gr)">⛁ Distribuido</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="kh"><span><kbd>←</kbd><kbd>→</kbd> Navegar</span><span><kbd>ESC</kbd> Cerrar</span></div>
+
+<script>
+// ===== STARS (more, bigger, varied) =====
+const se=document.getElementById('stars');
+for(let i=0;i<200;i++){const s=document.createElement('div');const big=Math.random()>0.92;s.className='star'+(big?' big':'');const sz=big?2+Math.random()*3:0.8+Math.random()*2;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${1.5+Math.random()*5}s;--o:${0.15+Math.random()*0.85};animation-delay:${Math.random()*5}s`;se.appendChild(s)}
+
+// ===== PARTICLES =====
+const pe=document.getElementById('parts');
+const pcols=['var(--cy)','var(--mg)','var(--bl)','var(--gr)','var(--or)'];
+function mkp(){const p=document.createElement('div');p.className='part';const sz=2+Math.random()*6;p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;--d:${8+Math.random()*16}s;background:${pcols[~~(Math.random()*pcols.length)]};opacity:${0.3+Math.random()*0.5}`;pe.appendChild(p);setTimeout(()=>p.remove(),24000)}
+setInterval(mkp,400);
+
+// ===== DATA PARTICLES (floating SQL/code) =====
+const dp=document.getElementById('dparts');
+const dtexts=['SELECT','INSERT','REPLICATE','SYNC','COMMIT','SHARD','NODE','RAFT','SPANNER','AURORA','⛁','☁','◈','⬡'];
+function mkdp(){const d=document.createElement('div');d.className='data-particle';d.textContent=dtexts[~~(Math.random()*dtexts.length)];const c=pcols[~~(Math.random()*pcols.length)];d.style.cssText=`left:${Math.random()*100}%;--d:${15+Math.random()*20}s;--dl:${Math.random()*10}s;color:${c};font-size:${0.5+Math.random()*0.4}rem`;dp.appendChild(d);setTimeout(()=>d.remove(),35000)}
+setInterval(mkdp,2000);for(let i=0;i<8;i++)setTimeout(mkdp,i*800);
+
+// ===== SLIDES =====
+const sls=document.querySelectorAll('.sl');let cur=0;const tot=sls.length;
+function upd(){sls.forEach((s,i)=>s.classList.toggle('on',i===cur));document.getElementById('sc').textContent=`${cur+1} / ${tot}`;document.getElementById('np').style.width=((cur+1)/tot*100)+'%';document.querySelectorAll('.sd').forEach((d,i)=>d.classList.toggle('on',i===cur))}
+function next(){if(cur<tot-1){cur++;upd()}}
+function prev(){if(cur>0){cur--;upd()}}
+function go(n){cur=n;upd()}
+
+const sx=document.getElementById('sdx');
+sls.forEach((s,i)=>{const d=document.createElement('div');d.className='sd'+(i===0?' on':'');d.setAttribute('data-l',s.getAttribute('data-l')||'');d.onclick=()=>go(i);sx.appendChild(d)});
+
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft')prev();if(e.key==='Escape')xmo()});
+let tx=0;document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){d<0?next():prev()}});
+
+// ===== MODAL =====
+const md={
+def:{t:'Concepto',c:'var(--cy)',h:'Multi-Cloud en Profundidad',b:`<p>En bases de datos, multi-cloud implica despliegues dispersos en diferentes nubes con gestión centralizada de backups, migración y query tuning.</p><p>Se enfoca <strong>exclusivamente en nubes públicas</strong>, a diferencia del modelo híbrido.</p><div class="hbox"><strong>🔥 Dato Gartner:</strong> SQL distribuido fue el segmento de mayor crecimiento en el Magic Quadrant 2025, con +38% de adopción en Fortune 500.</div><p>Las organizaciones seleccionan los mejores servicios de cada proveedor para cada workload específico.</p>`},
+hybrid:{t:'Concepto',c:'var(--mg)',h:'Nube Híbrida Explicada',b:`<p>Combina <strong>pública con privada/on-premises</strong>. Ideal para requisitos regulatorios estrictos (HIPAA, GDPR).</p><div class="hbox"><strong>📋 Ejemplo:</strong> Un hospital mantiene registros médicos on-prem (HIPAA) pero usa AWS para analytics y ML.</div>`},
+aws:{t:'AWS',c:'var(--or)',h:'Amazon Aurora Global Database',b:`<p><strong>5x MySQL, 2x PostgreSQL.</strong> Storage hasta 128TB. Hasta 15 réplicas de lectura cross-region, latencia <1s.</p><div class="hbox"><strong>⚠️ Limitación:</strong> NO escala escrituras horizontalmente. Un solo master. Aurora DSQL (GA 2026) sí es SQL distribuido: $0.50/DPU-hora.</div>`},
+azure:{t:'Azure',c:'var(--bl)',h:'Azure Cosmos DB',b:`<p>Multi-modelo distribuido. <strong>5 niveles de consistencia:</strong> Strong, Bounded Staleness, Session, Consistent Prefix, Eventual.</p><p>APIs: SQL, MongoDB, Cassandra, Gremlin, Table. Latencia ~5ms.</p>`},
+gcp:{t:'GCP',c:'var(--gr)',h:'Google Cloud Spanner',b:`<p>Primer SQL distribuido global. <strong>TrueTime API</strong> con relojes atómicos + GPS. Paper de Google 2012, público desde 2017.</p><div class="hbox"><strong>🌍 Caso:</strong> Banca global, retail masivo, SaaS multi-continental. Deep integration con Vertex AI.</div>`},
+sync:{t:'Replicación',c:'var(--cy)',h:'Replicación Síncrona',b:`<p>Actualiza <strong>todas las réplicas antes de confirmar</strong>. Two-phase commit garantiza acuerdo de todos los nodos.</p><p><strong>✅ Ventaja:</strong> Consistencia fuerte total.</p><p><strong>❌ Desventaja:</strong> Mayor latencia. Solo viable a <300km.</p><div class="hbox"><strong>💳 Uso:</strong> Pagos, banca, cualquier app donde la integridad es crítica.</div>`},
+async:{t:'Replicación',c:'var(--mg)',h:'Replicación Asíncrona',b:`<p>Confirma <strong>inmediatamente</strong> en el primario. Propaga después en segundo plano.</p><p><strong>✅ Ventaja:</strong> Rendimiento óptimo, menor costo.</p><p><strong>❌ Desventaja:</strong> Si el primario falla antes de propagar, se pierden datos (RPO > 0).</p><div class="hbox"><strong>📡 Uso:</strong> CDNs, backups remotos, alta carga donde un lag es aceptable.</div>`},
+snap:{t:'Replicación',c:'var(--or)',h:'Replicación por Snapshots',b:`<p><strong>Instantánea completa</strong> a intervalos. Sobreescribe todo en el suscriptor.</p><p><strong>✅ Ventaja:</strong> Simple. No monitoreo continuo.</p><p><strong>❌ Desventaja:</strong> Lenta para grandes volúmenes. Datos desactualizados entre copias.</p><div class="hbox"><strong>📦 Uso:</strong> Catálogos, precios, tipos de cambio — datos que cambian periódicamente.</div>`},
+trans:{t:'Replicación',c:'var(--gr)',h:'Replicación Transaccional',b:`<p>Cada <strong>transacción individual</strong> se replica en near real-time via Log Reader Agent.</p><p><strong>✅ Ventaja:</strong> Equilibrio rendimiento/consistencia.</p><p><strong>❌ Desventaja:</strong> Más compleja que snapshot.</p><div class="hbox"><strong>📈 Uso:</strong> Trading online, transacciones bancarias, OLTP que necesita datos al día.</div>`},
+merge:{t:'Replicación',c:'var(--bl)',h:'Replicación Merge',b:`<p><strong>Múltiples sitios</strong> hacen cambios independientes. Merge Agent sincroniza con <strong>resolución automática de conflictos</strong>.</p><p><strong>✅ Ventaja:</strong> Trabajo offline + sincronización.</p><p><strong>❌ Desventaja:</strong> La más compleja. Conflictos pueden ser inesperados.</p><div class="hbox"><strong>🏪 Uso:</strong> Retail distribuido (múltiples tiendas), apps móviles offline-first.</div>`},
+resilience:{t:'Beneficio',c:'var(--cy)',h:'Resiliencia Multi-Cloud',b:`<p><strong>82%</strong> de empresas multi-cloud reportan mejor preparación para DR.</p><p>Failover automático entre proveedores ante outages.</p><div class="hbox"><strong>🏦 Caso real:</strong> Un fintech migró a CockroachDB en múltiples regiones GCP + AWS para resiliencia cross-cloud con auto-healing.</div>`},
+independence:{t:'Beneficio',c:'var(--mg)',h:'Independencia del Proveedor',b:`<p>Mayor <strong>poder de negociación</strong>. Bases open-source (PostgreSQL, CockroachDB, TiDB) facilitan portabilidad.</p><div class="hbox"><strong>🚀 Dato:</strong> 65% de empresas multi-cloud reportan reducción en time-to-market. DigitalRoute (AWS+GCP+Azure) lo comprobó.</div>`},
+continuity:{t:'Beneficio',c:'var(--gr)',h:'Continuidad del Negocio',b:`<p>Ningún proveedor garantiza <strong>100% uptime</strong>. Multi-cloud cubre escenarios donde un proveedor entero cae.</p><div class="hbox"><strong>🏦 Caso:</strong> HSBC usa AWS + GCP + Azure para cumplir regulaciones en diferentes regiones y soberanía de datos.</div>`},
+latency:{t:'Desafío',c:'var(--cy)',h:'Latencia Inter-Cloud',b:`<p><strong>~5ms mínimo</strong> por operación en bases distribuidas. Síncrona impráctica a >300km.</p><div class="hbox"><strong>💡 Mitigación:</strong> Replicación asíncrona para datos no críticos, geo-partitioning, edge computing.</div>`},
+security:{t:'Desafío',c:'var(--mg)',h:'Seguridad Fragmentada',b:`<p>Cada proveedor tiene su IAM propio. Misconfiguraciones = causa #1 de brechas.</p><div class="hbox"><strong>🛡️ Solución:</strong> Zero-Trust, CSPM unificado, estándares de seguridad consistentes cross-cloud.</div>`},
+costs:{t:'Desafío',c:'var(--or)',h:'Costos Ocultos',b:`<p><strong>Egress fees:</strong> $0.01-0.09/GB entre nubes. Se acumula rápidamente con replicación continua.</p><div class="hbox"><strong>💡 Solución:</strong> FinOps, monitoreo unificado (Datadog/CloudHealth), data locality para minimizar transferencias.</div>`},
+complexity:{t:'Desafío',c:'var(--gr)',h:'Complejidad Operativa',b:`<p>APIs, CLIs y consolas diferentes por proveedor. El equipo necesita expertise multi-plataforma.</p><div class="hbox"><strong>💡 Solución:</strong> Data Fabrics para abstracción, Kubernetes para portabilidad, Terraform para IaC multi-cloud.</div>`},
+aurora:{t:'AWS',c:'var(--or)',h:'Aurora — Deep Dive',b:`<p><strong>5x MySQL, 2x PostgreSQL.</strong> Storage 128TB. 15 réplicas de lectura. Failover <1 min.</p><div class="hbox"><strong>🆕 Aurora DSQL (2026):</strong> Serverless, active-active multi-region, $0.50/DPU-hora. Compite con Spanner y CockroachDB.</div>`},
+spanner:{t:'GCP',c:'var(--gr)',h:'Spanner — Deep Dive',b:`<p><strong>TrueTime</strong> (relojes atómicos + GPS). Paper Google 2012. Inspiró CockroachDB, YugabyteDB.</p><div class="hbox"><strong>🌍 Escala planetaria:</strong> OLTP global — banca, retail masivo, SaaS. Gartner lo posiciona como líder en Cloud DBMS.</div>`},
+crdb:{t:'Multi-Cloud',c:'var(--cy)',h:'CockroachDB — Deep Dive',b:`<p><strong>Cada nodo lee Y escribe.</strong> PostgreSQL compatible. Aislamiento serializable. Consenso Raft. Self-healing + Kubernetes.</p><div class="hbox"><strong>☁ Multi-cloud nativo:</strong> AWS, Azure, GCP, on-prem o cualquier combinación. +38% adopción Fortune 500 en SQL distribuido.</div>`},
+tidb:{t:'Open Source',c:'var(--mg)',h:'TiDB — Deep Dive',b:`<p><strong>HTAP:</strong> TiKV (row-store, OLTP) + TiFlash (column-store, OLAP). MySQL compatible.</p><div class="hbox"><strong>⚠️ Limitación:</strong> Timestamp oracle global (Percolator) = menos ideal para multi-region de alta latencia.</div>`}
+};
+
+function omo(k){const d=md[k];if(!d)return;document.getElementById('mc').innerHTML=`<div class="mtag" style="background:${d.c}22;color:${d.c}">${d.t}</div><h3>${d.h}</h3>${d.b}`;document.getElementById('mo').classList.add('show')}
+function xmo(){document.getElementById('mo').classList.remove('show')}
+
+function qa(el,ok){const p=el.parentElement;p.querySelectorAll('.qo').forEach(o=>{o.style.pointerEvents='none';o.style.opacity='0.35'});el.style.opacity='1';el.classList.add(ok?'ok':'no');if(!ok)p.querySelectorAll('.qo').forEach(o=>{if(o.onclick&&o.onclick.toString().includes(',1)')){o.classList.add('ok');o.style.opacity='1'}})}
+</script>
+</body>
+</html>
