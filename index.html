@@ -261,10 +261,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 /* ===== REPLICATION ===== */
 .rgr{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem;margin-top:2.5rem}
 .rc{text-align:center;padding:2rem 1.2rem;cursor:pointer}
-.rc .ri{width:70px;height:70px;border-radius:18px;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;font-size:2rem;transition:all 0.6s}
+.rc .ri{width:80px;height:80px;border-radius:20px;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;font-size:2.4rem;transition:all 0.6s}
 .rc:hover .ri{transform:rotateY(180deg) scale(1.15);box-shadow:0 0 25px currentColor}
-.rc h3{font-size:1.1rem;margin-bottom:0.5rem}
-.rc p{font-size:0.9rem;color:var(--t2);line-height:1.45;min-height:50px}
+.rc h3{font-size:1.25rem;margin-bottom:0.5rem}
+.rc p{font-size:0.95rem;color:var(--t2);line-height:1.45;min-height:50px}
 .rtg{font-size:0.68rem;padding:5px 14px;border-radius:100px;display:inline-block;margin-top:0.8rem;font-weight:700;letter-spacing:0.5px}
 /* Animated connector between rep cards */
 .rc::after{content:'';position:absolute;right:-10px;top:50%;width:20px;height:2px;background:linear-gradient(90deg,transparent,var(--gb));opacity:0.5}
@@ -273,52 +273,52 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 /* ===== BENEFITS ===== */
 .bgr{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem}
 .bc{padding:2.8rem 2rem;text-align:center;cursor:pointer}
-.bc .bn{font-size:4rem;font-weight:900;font-family:'Space Mono',monospace;line-height:1;margin-bottom:0.3rem;transition:all 0.5s}
+.bc .bn{font-size:4.5rem;font-weight:900;font-family:'Space Mono',monospace;line-height:1;margin-bottom:0.3rem;transition:all 0.5s}
 .bc:hover .bn{transform:scale(1.15)}
 .bc .bl{font-size:0.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--t2);margin-bottom:1.3rem}
-.bc h3{font-size:1.35rem;margin-bottom:0.9rem}
-.bc p{font-size:1rem;line-height:1.65}
+.bc h3{font-size:1.5rem;margin-bottom:0.9rem}
+.bc p{font-size:1.05rem;line-height:1.65}
 .bc .bx{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--gb);font-size:0.9rem;color:var(--t2);font-style:italic}
 
 /* ===== CHALLENGES ===== */
 .cgr{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:2.5rem}
 .cc{padding:2.2rem;cursor:pointer;display:flex;gap:1.4rem;align-items:flex-start}
-.cc .cci{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;transition:all 0.5s}
+.cc .cci{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;transition:all 0.5s}
 .cc:hover .cci{transform:scale(1.2) rotate(8deg)}
-.cc h3{font-size:1.25rem;margin-bottom:0.5rem}
-.cc p{font-size:0.95rem;color:var(--t2);line-height:1.6}
-.cst{margin-top:0.7rem;display:inline-block;padding:5px 12px;border-radius:10px;font-size:0.78rem;font-weight:700}
+.cc h3{font-size:1.4rem;margin-bottom:0.5rem}
+.cc p{font-size:1.05rem;color:var(--t2);line-height:1.6}
+.cst{margin-top:0.7rem;display:inline-block;padding:6px 14px;border-radius:10px;font-size:0.85rem;font-weight:700}
 
 /* ===== EXAMPLES ===== */
 .egr{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:2.5rem}
 .ec{padding:2.2rem;display:flex;gap:1.4rem;cursor:pointer}
-.ec .el{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:900;flex-shrink:0;transition:all 0.5s}
+.ec .el{width:76px;height:76px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:900;flex-shrink:0;transition:all 0.5s}
 .ec:hover .el{transform:scale(1.15) rotate(-5deg)}
-.ec h3{font-size:1.2rem;margin-bottom:0.4rem}
-.ec .ep{font-size:0.72rem;padding:4px 12px;border-radius:100px;display:inline-block;font-weight:700;margin-bottom:0.6rem}
-.ec p{font-size:0.95rem;color:var(--t2);line-height:1.55}
+.ec h3{font-size:1.35rem;margin-bottom:0.4rem}
+.ec .ep{font-size:0.78rem;padding:5px 14px;border-radius:100px;display:inline-block;font-weight:700;margin-bottom:0.6rem}
+.ec p{font-size:1.05rem;color:var(--t2);line-height:1.55}
 
 /* ===== TABLE ===== */
-.ctb{width:100%;border-collapse:separate;border-spacing:0;margin-top:2.5rem;font-size:1rem}
-.ctb th{padding:16px 20px;text-align:left;font-weight:700;color:var(--cy);border-bottom:2px solid rgba(0,229,255,0.2);font-size:0.82rem;letter-spacing:1.5px;text-transform:uppercase}
-.ctb td{padding:16px 20px;border-bottom:1px solid var(--gb);color:var(--t2);font-size:0.95rem;transition:all 0.3s}
+.ctb{width:100%;border-collapse:separate;border-spacing:0;margin-top:2.5rem;font-size:1.1rem}
+.ctb th{padding:18px 22px;text-align:left;font-weight:700;color:var(--cy);border-bottom:2px solid rgba(0,229,255,0.2);font-size:0.9rem;letter-spacing:1.5px;text-transform:uppercase}
+.ctb td{padding:18px 22px;border-bottom:1px solid var(--gb);color:var(--t2);font-size:1.05rem;transition:all 0.3s}
 .ctb tr:hover td{background:rgba(0,229,255,0.03);color:var(--t1)}
 .ctb td:first-child{font-weight:700;color:var(--t1)}
 
 /* ===== QUIZ ===== */
-.qq{font-size:1.35rem;font-weight:700;margin-bottom:1.3rem;line-height:1.4}
-.qos{display:grid;gap:0.9rem}
-.qo{padding:1.3rem 1.6rem;border:1.5px solid var(--gb);border-radius:16px;background:var(--gl);cursor:pointer;transition:all 0.35s;font-size:1.05rem;display:flex;align-items:center;gap:14px}
+.qq{font-size:1.5rem;font-weight:700;margin-bottom:1.3rem;line-height:1.4}
+.qos{display:grid;gap:1rem}
+.qo{padding:1.4rem 1.8rem;border:1.5px solid var(--gb);border-radius:16px;background:var(--gl);cursor:pointer;transition:all 0.35s;font-size:1.15rem;display:flex;align-items:center;gap:14px}
 .qo:hover{border-color:var(--cy);background:rgba(0,229,255,0.04);transform:translateX(8px);box-shadow:0 4px 20px rgba(0,0,0,0.2)}
 .qo.ok{border-color:var(--gr);background:rgba(0,230,118,0.1);color:var(--gr);transform:scale(1.02)}
 .qo.no{border-color:var(--rd);background:rgba(255,82,82,0.08);color:var(--rd)}
-.ql{width:36px;height:36px;border-radius:50%;border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;flex-shrink:0;transition:all 0.3s}
+.ql{width:40px;height:40px;border-radius:50%;border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;transition:all 0.3s}
 .qo.ok .ql{background:var(--gr);color:var(--bg);border-color:var(--gr)}
 .qo.no .ql{background:var(--rd);color:#fff;border-color:var(--rd)}
 
 /* ===== CLOSING ===== */
-.clb{font-size:clamp(4.5rem,12vw,9rem);font-weight:900;background:linear-gradient(135deg,var(--cy),var(--mg),var(--or));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;background-size:200% 200%;animation:grShift 4s ease-in-out infinite}
-.clq{font-family:'Playfair Display',serif;font-style:italic;font-size:1.6rem;color:var(--t2);max-width:700px;margin:1.2rem auto 2rem;line-height:1.7}
+.clb{font-size:clamp(5.5rem,15vw,12rem);font-weight:900;background:linear-gradient(135deg,var(--cy),var(--mg),var(--or));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;background-size:200% 200%;animation:grShift 4s ease-in-out infinite}
+.clq{font-family:'Playfair Display',serif;font-style:italic;font-size:1.8rem;color:var(--t2);max-width:700px;margin:1.2rem auto 2rem;line-height:1.7}
 .trow{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
 .trow span{padding:10px 24px;border-radius:100px;border:1.5px solid;font-size:0.9rem;font-family:'Space Mono',monospace;transition:all 0.4s;cursor:default}
 .trow span:hover{transform:scale(1.1) translateY(-3px);box-shadow:0 0 20px currentColor}
@@ -332,6 +332,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 /* Key hint */
 .kh{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:999;font-size:0.78rem;color:var(--t2);font-family:'Space Mono',monospace;opacity:0.35;display:flex;gap:1.5rem}
 .kh kbd{padding:4px 12px;border:1px solid var(--gb);border-radius:6px;background:var(--gl);font-size:0.72rem}
+
+/* ===== ANIMATED SVG ILLUSTRATIONS ===== */
+.anim-illust{position:absolute;pointer-events:none;z-index:0}
+.anim-illust.cover-cloud{right:5%;top:55%;width:220px;height:220px;opacity:0.25}
+.anim-illust.rep-arrows{right:3%;bottom:10%;width:180px;height:180px;opacity:0.18}
+.anim-illust.ben-rocket{right:2%;top:15%;width:160px;height:200px;opacity:0.15}
+.anim-illust.ch-shield{right:3%;top:12%;width:150px;height:180px;opacity:0.15}
+.anim-illust.ex-server{right:2%;bottom:8%;width:160px;height:200px;opacity:0.18}
+.anim-illust.tbl-vs{right:3%;bottom:10%;width:180px;height:180px;opacity:0.15}
+/* Animated SVG paths */
+@keyframes svgDraw{0%{stroke-dashoffset:300}100%{stroke-dashoffset:0}}
+@keyframes svgPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes svgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes svgSpin{to{transform:rotate(360deg)}}
+@keyframes svgBlink{0%,100%{opacity:0.3}50%{opacity:0.8}}
+.svg-draw{stroke-dasharray:300;animation:svgDraw 4s ease forwards infinite alternate}
+.svg-pulse{animation:svgPulse 3s ease-in-out infinite}
+.svg-float{animation:svgFloat 4s ease-in-out infinite}
+.svg-spin-slow{animation:svgSpin 12s linear infinite}
+.svg-blink{animation:svgBlink 2s ease-in-out infinite}
 
 @media(max-width:1000px){.dlayout,.bgr,.egr,.cgr{grid-template-columns:1fr}.rgr{grid-template-columns:repeat(3,1fr)}.igr{grid-template-columns:repeat(2,1fr)}.sl{padding:4.5rem 1.5rem 2rem}.sdx{display:none}.arch{height:300px}}
 @media(max-width:600px){.rgr,.igr{grid-template-columns:1fr 1fr}.cov-t{letter-spacing:-2px}}
@@ -377,7 +397,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 <div class="vp">
 
 <!-- SLIDE 0: COVER -->
-<div class="sl on" data-l="Inicio">
+<div class="sl on" data-l="Inicio" style="align-items:center">
   <div class="si" style="text-align:center;position:relative">
     <!-- Animated decorators -->
     <svg class="cov-deco tl" width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="1" class="pulse-ring"/><circle cx="60" cy="60" r="35" fill="none" stroke="rgba(0,229,255,0.15)" stroke-width="0.5" class="orbit"/></svg>
@@ -386,6 +406,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
     <svg class="cov-deco br" width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="30" fill="rgba(255,109,0,0.04)" class="breathe"/><circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,109,0,0.08)" stroke-width="0.5" class="orbit"/></svg>
     
     <div class="cov-badge">☁ Tema 7 · Aula Invertida · Bases de Datos Relacionales</div>
+    <!-- Animated cloud-database SVG -->
+    <svg class="anim-illust cover-cloud svg-float" viewBox="0 0 200 200" fill="none">
+      <ellipse cx="100" cy="90" rx="80" ry="45" stroke="var(--cy)" stroke-width="1.5" class="svg-draw" opacity="0.6"/>
+      <ellipse cx="65" cy="75" rx="50" ry="35" stroke="var(--cy)" stroke-width="1" opacity="0.3" class="svg-pulse"/>
+      <ellipse cx="140" cy="80" rx="45" ry="30" stroke="var(--mg)" stroke-width="1" opacity="0.3" class="svg-pulse" style="animation-delay:1s"/>
+      <rect x="75" y="110" width="50" height="40" rx="8" stroke="var(--cy)" stroke-width="1.5" opacity="0.5" class="svg-blink"/>
+      <line x1="88" y1="122" x2="112" y2="122" stroke="var(--cy)" stroke-width="1" opacity="0.4"/>
+      <line x1="88" y1="130" x2="108" y2="130" stroke="var(--mg)" stroke-width="1" opacity="0.4"/>
+      <line x1="88" y1="138" x2="105" y2="138" stroke="var(--cy)" stroke-width="1" opacity="0.3"/>
+      <circle cx="100" cy="170" r="4" fill="var(--cy)" class="svg-pulse" opacity="0.6"/>
+      <line x1="100" y1="150" x2="100" y2="166" stroke="var(--cy)" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+    </svg>
     <h1 class="cov-t"><span class="gr">Multi-Cloud</span><br>Databases</h1>
     <p class="cov-sub">Definición, replicación, beneficios y desafíos de las bases de datos distribuidas en múltiples nubes</p>
     <div class="cov-meta">
@@ -487,6 +519,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 <div class="sl" data-l="Replicación">
   <div class="si">
     <div class="sn sg">// 03 · Replicación</div>
+    <!-- Animated sync arrows SVG -->
+    <svg class="anim-illust rep-arrows" viewBox="0 0 180 180" fill="none">
+      <circle cx="90" cy="90" r="70" stroke="var(--cy)" stroke-width="1" opacity="0.2" class="svg-spin-slow"/>
+      <circle cx="90" cy="90" r="50" stroke="var(--mg)" stroke-width="1" opacity="0.15" style="animation:svgSpin 8s linear infinite reverse"/>
+      <path d="M60 90 A30 30 0 0 1 120 90" stroke="var(--cy)" stroke-width="2" fill="none" class="svg-draw" opacity="0.5"/>
+      <polygon points="122,85 130,90 122,95" fill="var(--cy)" opacity="0.5" class="svg-pulse"/>
+      <path d="M120 90 A30 30 0 0 1 60 90" stroke="var(--mg)" stroke-width="2" fill="none" class="svg-draw" style="animation-delay:2s" opacity="0.5"/>
+      <polygon points="58,95 50,90 58,85" fill="var(--mg)" opacity="0.5" class="svg-pulse" style="animation-delay:1s"/>
+      <circle cx="90" cy="60" r="6" stroke="var(--gr)" stroke-width="1.5" fill="none" class="svg-pulse" opacity="0.4"/>
+      <circle cx="90" cy="120" r="6" stroke="var(--or)" stroke-width="1.5" fill="none" class="svg-pulse" style="animation-delay:1.5s" opacity="0.4"/>
+    </svg>
     <h2 class="st sg">Tipos de <span class="hl">Replicación</span></h2>
     <p class="sd2 sg">Haz clic en cada tipo para ver detalles, casos de uso y limitaciones.</p>
     <div class="rgr">
@@ -500,9 +543,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 </div>
 
 <!-- SLIDE 5: BENEFITS -->
-<div class="sl" data-l="Beneficios">
+<div class="sl" data-l="Beneficios" style="align-items:center">
   <div class="si">
     <div class="sn sg">// 04 · Beneficios</div>
+    <!-- Animated growth/rocket SVG -->
+    <svg class="anim-illust ben-rocket svg-float" viewBox="0 0 160 200" fill="none">
+      <path d="M80 30 L80 170" stroke="var(--gr)" stroke-width="1" stroke-dasharray="5 5" opacity="0.3"/>
+      <circle cx="80" cy="40" r="15" stroke="var(--gr)" stroke-width="1.5" fill="none" class="svg-pulse" opacity="0.4"/>
+      <polygon points="80,20 90,40 70,40" fill="var(--gr)" opacity="0.3" class="breathe"/>
+      <rect x="60" y="80" width="40" height="30" rx="5" stroke="var(--cy)" stroke-width="1" fill="none" opacity="0.3" class="svg-blink"/>
+      <rect x="55" y="120" width="50" height="35" rx="5" stroke="var(--cy)" stroke-width="1" fill="none" opacity="0.25" class="svg-blink" style="animation-delay:0.7s"/>
+      <rect x="50" y="165" width="60" height="25" rx="5" stroke="var(--mg)" stroke-width="1" fill="none" opacity="0.2" class="svg-blink" style="animation-delay:1.4s"/>
+      <line x1="68" y1="92" x2="92" y2="92" stroke="var(--cy)" stroke-width="1" opacity="0.3"/>
+      <line x1="65" y1="134" x2="95" y2="134" stroke="var(--cy)" stroke-width="1" opacity="0.25"/>
+    </svg>
     <h2 class="st sg">¿Por qué <span class="hl">Multi-Cloud</span>?</h2>
     <div class="bgr">
       <div class="gc bc shimmer sg" onclick="omo('resilience')"><div class="bn" style="color:var(--cy)"><span class="heartbeat" style="display:inline-block">82%</span></div><div class="bl">Mejor preparación DR</div><h3>Resiliencia</h3><p>Distribuye workloads y failover entre proveedores, reduciendo downtime ante outages.</p><div class="bx">Si AWS cae, Azure y GCP mantienen las operaciones activas.</div></div>
@@ -513,9 +567,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 </div>
 
 <!-- SLIDE 6: CHALLENGES -->
-<div class="sl" data-l="Desafíos">
+<div class="sl" data-l="Desafíos" style="align-items:center">
   <div class="si">
     <div class="sn sg">// 05 · Desafíos</div>
+    <!-- Animated shield/warning SVG -->
+    <svg class="anim-illust ch-shield svg-float" viewBox="0 0 150 180" fill="none" style="animation-delay:1s">
+      <path d="M75 15 L130 45 L130 100 C130 140 75 165 75 165 C75 165 20 140 20 100 L20 45 Z" stroke="var(--mg)" stroke-width="1.5" fill="none" class="svg-draw" opacity="0.4"/>
+      <path d="M75 35 L115 55 L115 95 C115 125 75 145 75 145 C75 145 35 125 35 95 L35 55 Z" stroke="var(--or)" stroke-width="1" fill="none" opacity="0.2" class="svg-pulse"/>
+      <text x="75" y="95" text-anchor="middle" font-size="35" fill="var(--or)" opacity="0.4" class="svg-pulse">!</text>
+      <circle cx="40" cy="30" r="4" fill="var(--rd)" opacity="0.3" class="svg-blink"/>
+      <circle cx="110" cy="25" r="3" fill="var(--cy)" opacity="0.3" class="svg-blink" style="animation-delay:1s"/>
+      <circle cx="130" cy="130" r="5" fill="var(--mg)" opacity="0.2" class="svg-blink" style="animation-delay:0.5s"/>
+    </svg>
     <h2 class="st sg">Los <span class="hl">Retos</span> Reales</h2>
     <p class="sd2 sg">Haz clic en cada desafío para profundizar en soluciones.</p>
     <div class="cgr">
@@ -528,9 +591,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 </div>
 
 <!-- SLIDE 7: EXAMPLES -->
-<div class="sl" data-l="Tecnologías">
+<div class="sl" data-l="Tecnologías" style="align-items:center">
   <div class="si">
     <div class="sn sg">// 06 · Tecnologías</div>
+    <!-- Animated server/database SVG -->
+    <svg class="anim-illust ex-server svg-float" viewBox="0 0 160 200" fill="none" style="animation-delay:0.5s">
+      <rect x="35" y="20" width="90" height="45" rx="8" stroke="var(--cy)" stroke-width="1.5" fill="none" opacity="0.35" class="svg-blink"/>
+      <circle cx="55" cy="42" r="4" fill="var(--gr)" opacity="0.5" class="svg-pulse"/>
+      <line x1="70" y1="38" x2="110" y2="38" stroke="var(--cy)" stroke-width="1" opacity="0.3"/>
+      <line x1="70" y1="46" x2="100" y2="46" stroke="var(--cy)" stroke-width="1" opacity="0.2"/>
+      <rect x="35" y="75" width="90" height="45" rx="8" stroke="var(--mg)" stroke-width="1.5" fill="none" opacity="0.3" class="svg-blink" style="animation-delay:0.7s"/>
+      <circle cx="55" cy="97" r="4" fill="var(--or)" opacity="0.5" class="svg-pulse" style="animation-delay:0.5s"/>
+      <line x1="70" y1="93" x2="110" y2="93" stroke="var(--mg)" stroke-width="1" opacity="0.3"/>
+      <line x1="70" y1="101" x2="95" y2="101" stroke="var(--mg)" stroke-width="1" opacity="0.2"/>
+      <rect x="35" y="130" width="90" height="45" rx="8" stroke="var(--gr)" stroke-width="1.5" fill="none" opacity="0.25" class="svg-blink" style="animation-delay:1.4s"/>
+      <circle cx="55" cy="152" r="4" fill="var(--cy)" opacity="0.5" class="svg-pulse" style="animation-delay:1s"/>
+      <line x1="70" y1="148" x2="110" y2="148" stroke="var(--gr)" stroke-width="1" opacity="0.3"/>
+      <line x1="80" y1="65" x2="80" y2="75" stroke="var(--t2)" stroke-width="1" stroke-dasharray="2 2" opacity="0.3"/>
+      <line x1="80" y1="120" x2="80" y2="130" stroke="var(--t2)" stroke-width="1" stroke-dasharray="2 2" opacity="0.3"/>
+    </svg>
     <h2 class="st sg">Bases de Datos <span class="hl">Distribuidas</span></h2>
     <div class="egr">
       <div class="gc ec shimmer sg" onclick="omo('aurora')"><div class="el" style="background:rgba(255,109,0,0.1);color:var(--or)"><span class="breathe" style="display:inline-block">A</span></div><div><span class="ep" style="background:rgba(255,109,0,0.1);color:var(--or)">AWS</span><h3>Aurora Global Database</h3><p>Réplicas de lectura cross-region. Compatible MySQL/PostgreSQL. Un solo master — no es SQL distribuido verdadero.</p></div></div>
@@ -542,7 +621,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 </div>
 
 <!-- SLIDE 8: TABLE -->
-<div class="sl" data-l="Comparación">
+<div class="sl" data-l="Comparación" style="align-items:center">
   <div class="si">
     <div class="sn sg">// 07 · Comparativa</div>
     <h2 class="st sg">Multi-Cloud vs <span class="hl">Híbrido</span></h2>
@@ -614,7 +693,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.7rem 2rem;display
 </div>
 
 <!-- SLIDE 11: CLOSING -->
-<div class="sl" data-l="Cierre" style="text-align:center">
+<div class="sl" data-l="Cierre" style="text-align:center;align-items:center">
   <div class="si" style="text-align:center;position:relative">
     <svg class="cov-deco tl" width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="55" fill="none" stroke="rgba(0,229,255,0.12)" stroke-width="1.5" class="pulse-ring"/><circle cx="70" cy="70" r="40" fill="none" stroke="rgba(0,229,255,0.08)" stroke-width="0.5" class="orbit"/></svg>
     <svg class="cov-deco br" width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="45" fill="none" stroke="rgba(224,64,251,0.1)" stroke-width="1" class="pulse-ring"/></svg>
